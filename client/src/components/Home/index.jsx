@@ -11,12 +11,12 @@ const Home = () => {
   const [activeTitle, setActiveTitle] = React.useState("")
   const [activeFilters, setActiveFilters] = React.useState([])
   const token = Cookies.get("token")
-  const userDetails = JSON.parse(localStorage.getItem("user"))
-  const { name } = userDetails
-
   if (!token) {
     return <Navigate to="/login" />
   }
+
+  const userDetails = JSON.parse(localStorage.getItem("user"))
+  const { name } = userDetails
 
   const handleSearchTitle = (e) => {
     setActiveTitle(e)

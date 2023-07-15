@@ -67,8 +67,8 @@
   cursor: pointer;
   font-weight: 500;
   transition: all 0.3s ease;
-  height: 28px;
-  width: 30px;
+  height: 32px;
+  width: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,7 +131,7 @@
 
 @media screen and (min-width: 768px) {
   .create-task-popup-container {
-    min-width: 450px;
+    min-width: 480px;
   }
 }
 

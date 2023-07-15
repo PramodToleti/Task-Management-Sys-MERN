@@ -2,14 +2,19 @@ import React from "react"
 import { FiSearch, FiFilter, FiPlus } from "react-icons/fi"
 import Popup from "reactjs-popup"
 import { useForm } from "react-hook-form"
+import Cookies from "js-cookie"
+import { Oval } from "react-loader-spinner"
+import { toast } from "react-hot-toast"
 
 import "./index.css"
 
-const TaskForm = (props) => {
-  const { register, handleSubmit, errors, handleTaskData } = props
+const CreateTaskForm = (props) => {
+  const { register, handleSubmit, errors, reset, handleTaskData, loading } =
+    props
 
   const onSubmit = (data) => {
     handleTaskData(data)
+    reset()
   }
 
   return (
@@ -74,7 +79,22 @@ const TaskForm = (props) => {
             )}
           </div>
           <button type="submit" className="create-btn">
-            Create
+            {loading ? (
+              <Oval
+                height={25}
+                width={25}
+                color="#ccc"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#fff"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            ) : (
+              "Create"
+            )}
           </button>
         </form>
       </div>
@@ -88,10 +108,47 @@ const TaskHeader = (props) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm()
+  const [loading, setLoading] = React.useState(false)
+  const popupRef = React.useRef(null)
+  const formRef = React.useRef(null)
 
-  const handleTaskData = (data) => {
-    console.log(data)
+  const location = window.location.pathname
+
+  const handleTaskData = async (data) => {
+    setLoading(true)
+
+    //Api call for creating task
+    const taskData = {
+      ...data,
+      createdBy: JSON.parse(localStorage.getItem("user")).id,
+    }
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+      body: JSON.stringify(taskData),
+    }
+
+    const response = await fetch(
+      "http://localhost:5000/api/tasks/create",
+      options
+    )
+    const json = await response.json()
+    console.log(json)
+
+    if (response.ok) {
+      setLoading(false)
+      toast.success("Task Created")
+      popupRef.current.close()
+    } else {
+      setLoading(false)
+      toast.error(json.message)
+    }
   }
 
   return (
@@ -159,24 +216,30 @@ const TaskHeader = (props) => {
             </div>
           </Popup>
         </div>
-        <div className="create-task-container">
-          <Popup
-            trigger={
-              <button className="create-task-btn">
-                <FiPlus className="header-icon" />
-              </button>
-            }
-            modal
-            nested
-          >
-            <TaskForm
-              register={register}
-              handleSubmit={handleSubmit}
-              errors={errors}
-              handleTaskData={handleTaskData}
-            />
-          </Popup>
-        </div>
+        {location !== "/assigned-to-me" && (
+          <div className="create-task-container">
+            <Popup
+              trigger={
+                <button className="create-task-btn">
+                  <FiPlus className="header-icon" />
+                </button>
+              }
+              modal
+              nested
+              ref={popupRef}
+            >
+              <CreateTaskForm
+                register={register}
+                handleSubmit={handleSubmit}
+                errors={errors}
+                reset={reset}
+                handleTaskData={handleTaskData}
+                type="create"
+                loading={loading}
+              />
+            </Popup>
+          </div>
+        )}
       </div>
     </div>
   )
