@@ -9,7 +9,7 @@ dotenv.config()
 
 //User Singup
 router.route("/signup").post(async (req, res) => {
-  const { username, email, password } = req.body
+  const { username, email, password, role } = req.body
 
   try {
     const isUserPresent = await User.findOne({ email: email })
@@ -22,6 +22,7 @@ router.route("/signup").post(async (req, res) => {
         username,
         email,
         password: hashPassword,
+        role,
       })
 
       newUser.save()
@@ -30,6 +31,7 @@ router.route("/signup").post(async (req, res) => {
         id: newUser._id,
         name: newUser.username,
         email: newUser.email,
+        role: newUser.role,
       }
 
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -62,6 +64,7 @@ router.route("/login").post(async (req, res) => {
           id: isUserPresent._id,
           name: isUserPresent.username,
           email: isUserPresent.email,
+          role: isUserPresent.role,
         }
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
