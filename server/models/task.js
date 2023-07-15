@@ -21,6 +21,10 @@ const taskSchema = new Schema({
     default: "Pending",
   },
   assignedUser: {
+    type: String,
+    require: true,
+  },
+  createdBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },

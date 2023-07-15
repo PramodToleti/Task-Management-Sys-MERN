@@ -7,6 +7,10 @@ const User = require("../models/user")
 
 dotenv.config()
 
+router.route("/").get(async (req, res) => {
+  res.send("Hello from server")
+})
+
 //User Singup
 router.route("/signup").post(async (req, res) => {
   const { username, email, password, role } = req.body

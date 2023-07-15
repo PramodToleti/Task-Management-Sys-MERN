@@ -3,7 +3,8 @@ const morgan = require("morgan")
 const cors = require("cors")
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
-const routes = require("./routes/routes")
+const routes = require("./routes/user.routes")
+const taskRoutes = require("./routes/tasks.routes")
 
 dotenv.config()
 
@@ -30,3 +31,4 @@ mongoose
   .catch((err) => console.log(err))
 
 app.use("/api", routes)
+app.use("/api/tasks", taskRoutes)
