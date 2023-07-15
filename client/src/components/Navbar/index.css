@@ -1,0 +1,138 @@
+.hamburger-container {
+  display: inline-block;
+  padding: 25px;
+  cursor: pointer;
+}
+
+.hamburger,
+.cross {
+  font-size: 32px;
+}
+
+.mobile-side-bar {
+  position: absolute;
+  top: 0;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #000000;
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 999;
+}
+
+@media screen and (min-width: 768px) {
+  .mobile-side-bar,
+  .hamburger-container {
+    display: none;
+  }
+
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #000000;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+    width: 30%;
+    max-width: 250px;
+    padding: 25px;
+    padding-top: 55px;
+    z-index: 999;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .desktop-sidebar {
+    display: none;
+  }
+}
+
+.sidebar-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding-bottom: 30px;
+}
+
+.nav-links {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  height: 100%;
+}
+
+.link {
+  list-style-type: none;
+  text-decoration: none;
+  color: #fff;
+}
+
+.link:hover {
+  color: #91bef8;
+}
+
+.profile-container {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  font-size: 14px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #fff;
+  margin-bottom: 30px;
+}
+
+.profile-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+}
+
+@media screen and (width: 768px) {
+  .profile-icon {
+    height: 30px;
+    width: 35px;
+  }
+}
+
+.role {
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 8px;
+}
+
+.logout-btn {
+  background-color: #fff;
+  color: #000;
+  border: none;
+  outline: none;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  height: 40px;
+  width: 100px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #f77f7b;
+  color: #fff;
+}
+
+.active-link {
+  color: #91bef8;
+}

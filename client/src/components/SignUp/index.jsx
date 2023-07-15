@@ -110,6 +110,21 @@ const SignUp = () => {
               <p className="error">*Password must be atleast 5 characters</p>
             )}
           </div>
+          <div className="input-container">
+            <label htmlFor="role"> Role </label>
+
+            <select
+              name="role"
+              id="role"
+              {...register("role", { required: true })}
+              className="select-container"
+            >
+              <option value="user" selected>
+                User
+              </option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
           <button className="login-button sigin-btn">
             {loading ? (
               <Oval
