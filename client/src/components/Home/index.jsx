@@ -1,6 +1,7 @@
 import React from "react"
 import { Navigate } from "react-router-dom"
 import Cookies from "js-cookie"
+import { CgOptions } from "react-icons/cg"
 
 import Navbar from "../Navbar"
 
@@ -46,6 +47,33 @@ const Home = () => {
             handleActiveFilters={handleActiveFilters}
             activeFilters={activeFilters}
           />
+          <div className="task-list-container">
+            <div className="task-card">
+              <div className="task-card-header">
+                <div>
+                  <h2>Task Heading for testing the task card</h2>
+                </div>
+                <div>
+                  <p className="task-status"> • Pending</p>
+                  <CgOptions className="edit-icon" />
+                </div>
+              </div>
+
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque,
+                molestiae officia! Dolore quaerat natus molestiae voluptate
+                nobis fugit repellendus! Eveniet explicabo odio ad qui iure sunt
+                ipsam sapiente nesciunt temporibus.
+              </p>
+              <p>Due Date: </p>
+              <div className="task-card-footer">
+                <div>
+                  <div className="task-profile-icon">U</div>
+                  <div className="task-profile-icon">PT</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

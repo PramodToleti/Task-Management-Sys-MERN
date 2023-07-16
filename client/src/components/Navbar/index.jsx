@@ -1,17 +1,27 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { RxHamburgerMenu, RxCross2 } from "react-icons/rx"
 
 import "./index.css"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import Cookies from "js-cookie"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false)
+  const sidebarRef = React.useRef(null)
+  const navigate = useNavigate()
   const location = window.location.pathname
   const userDetails = JSON.parse(localStorage.getItem("user"))
   const { name, role } = userDetails
 
+  const handleLogout = () => {
+    Cookies.remove("token")
+    localStorage.removeItem("user")
+    navigate("/login")
+  }
+
   const activeLink = (path) => {
+    console.log
     if (location === path) {
       return "active-link"
     }
@@ -22,7 +32,7 @@ const Navbar = () => {
     let initials = ""
     const nameArray = name.split(" ")
     if (nameArray.length > 1) {
-      initials = nameArray[0][0] + nameArray[1][0]
+      initials = nameArray[0][0].toUpperCase() + nameArray[1][0].toUpperCase()
     } else {
       initials = nameArray[0][0]
     }
@@ -30,6 +40,18 @@ const Navbar = () => {
   }
 
   const isAdmin = role === "admin"
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   return (
     <>
@@ -55,6 +77,7 @@ const Navbar = () => {
             transition={{
               duration: 0.3,
             }}
+            ref={sidebarRef}
           >
             <div>
               <RxCross2 className="cross" onClick={() => setIsOpen(false)} />
@@ -95,7 +118,11 @@ const Navbar = () => {
                   <li>Events</li>
                 </Link>
               </ul>
-              <button type="button" className="logout-btn">
+              <button
+                type="button"
+                className="logout-btn"
+                onClick={() => handleLogout()}
+              >
                 Logout
               </button>
             </div>
@@ -104,10 +131,10 @@ const Navbar = () => {
       </AnimatePresence>
       <nav className="desktop-sidebar">
         <div className="profile-container">
-          <div className="profile-icon">PT</div>
+          <div className="profile-icon">{profileIconName(name)}</div>
           <div>
-            <h3>Pramod Toleti</h3>
-            <p className="role">Admin</p>
+            <h3>{name}</h3>
+            <p className="role">{role}</p>
           </div>
         </div>
         <div className="sidebar-sub">
@@ -139,7 +166,11 @@ const Navbar = () => {
               <li>Events</li>
             </Link>
           </ul>
-          <button type="button" className="logout-btn">
+          <button
+            type="button"
+            className="logout-btn"
+            onClick={() => handleLogout()}
+          >
             Logout
           </button>
         </div>

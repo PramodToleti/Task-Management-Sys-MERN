@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { FiSearch, FiFilter, FiPlus } from "react-icons/fi"
 import Popup from "reactjs-popup"
 import { useForm } from "react-hook-form"
@@ -11,11 +11,33 @@ import "./index.css"
 const CreateTaskForm = (props) => {
   const { register, handleSubmit, errors, reset, handleTaskData, loading } =
     props
+  const [users, setUsers] = React.useState([])
 
   const onSubmit = (data) => {
     handleTaskData(data)
     reset()
   }
+
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }
+
+    const getUsers = async () => {
+      const response = await fetch("http://localhost:5000/api/users", options)
+      const json = await response.json()
+      console.log(json)
+      if (response.ok) {
+        setUsers(json.data)
+      }
+    }
+
+    getUsers()
+  }, [])
 
   return (
     <div className="create-task-popup-container">
@@ -112,7 +134,6 @@ const TaskHeader = (props) => {
   } = useForm()
   const [loading, setLoading] = React.useState(false)
   const popupRef = React.useRef(null)
-  const formRef = React.useRef(null)
 
   const location = window.location.pathname
 
@@ -122,7 +143,7 @@ const TaskHeader = (props) => {
     //Api call for creating task
     const taskData = {
       ...data,
-      createdBy: JSON.parse(localStorage.getItem("user")).id,
+      createdBy: JSON.parse(localStorage.getItem("user")).name,
     }
 
     const options = {

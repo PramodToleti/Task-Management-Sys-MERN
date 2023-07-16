@@ -25,8 +25,8 @@ const taskSchema = new Schema({
     require: true,
   },
   createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
+    require: true,
   },
 })
 
