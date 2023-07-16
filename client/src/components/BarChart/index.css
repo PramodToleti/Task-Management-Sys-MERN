@@ -1,0 +1,14 @@
+.bar-chart-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+  max-height: 350px;
+}
+
+.bar-chart-container > h3 {
+  margin-bottom: 25px;
+  margin-top: 20px;
+}

@@ -1,0 +1,20 @@
+.dashboard-container {
+  height: 90vh;
+  padding: 25px;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .dashboard-container {
+    height: 100vh;
+    display: flex;
+  }
+}
+
+.dashboard-container::-webkit-scrollbar {
+  width: 0px !important;
+}
+
+.dashboard-content {
+  overflow-y: auto;
+}

@@ -1,0 +1,23 @@
+.pie-chart-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  max-height: 350px;
+  margin-bottom: 70px;
+  margin-top: 30px;
+}
+
+.pie-chart {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  max-width: 300px;
+  max-height: 300px;
+}

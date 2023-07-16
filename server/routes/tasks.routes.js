@@ -5,12 +5,13 @@ const jwt = require("jsonwebtoken")
 
 const User = require("../models/user")
 const Task = require("../models/task")
+const authenticateToken = require("../middlewares/authentication")
 
 router.route("/").get(async (req, res) => {
   res.send("Hello from tasks")
 })
 
-router.route("/create").post(async (req, res) => {
+router.route("/create").post(authenticateToken, async (req, res) => {
   const { title, description, dueDate, assignedTo, createdBy, status } =
     req.body
 
@@ -37,7 +38,7 @@ router.route("/create").post(async (req, res) => {
   }
 })
 
-router.route("/get/:id").get(async (req, res) => {
+router.route("/get/:id").get(authenticateToken, async (req, res) => {
   try {
     const { id } = req.params
     console.log(id)
@@ -53,7 +54,7 @@ router.route("/get/:id").get(async (req, res) => {
   }
 })
 
-router.route("/update/:id").put(async (req, res) => {
+router.route("/update/:id").put(authenticateToken, async (req, res) => {
   const { id, title, description, dueDate, assignedTo, createdBy, status } =
     req.body
 
@@ -93,7 +94,7 @@ router.route("/update/:id").put(async (req, res) => {
   }
 })
 
-router.route("/delete/:id").delete(async (req, res) => {
+router.route("/delete/:id").delete(authenticateToken, async (req, res) => {
   const { id } = req.params
 
   try {
@@ -108,7 +109,7 @@ router.route("/delete/:id").delete(async (req, res) => {
   }
 })
 
-router.route("/all").get(async (req, res) => {
+router.route("/all").get(authenticateToken, async (req, res) => {
   try {
     const tasks = await Task.find()
     const reversedTasks = tasks.reverse()
@@ -121,7 +122,7 @@ router.route("/all").get(async (req, res) => {
   }
 })
 
-router.route("/assigned/:id").get(async (req, res) => {
+router.route("/assigned/:id").get(authenticateToken, async (req, res) => {
   const { id } = req.params
 
   try {
@@ -131,6 +132,90 @@ router.route("/assigned/:id").get(async (req, res) => {
     res
       .status(200)
       .json({ message: "Tasks Fetched Successfully", tasks: reversedTasks })
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ message: "Internal Server Error" })
+  }
+})
+
+router.route("/weekly").get(authenticateToken, async (req, res) => {
+  try {
+    const currentDate = new Date()
+
+    const currentWeekStartDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - currentDate.getDay()
+    )
+
+    const currentWeekEndDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - currentDate.getDay() + 6
+    )
+
+    const previousWeekStartDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - currentDate.getDay() - 7
+    )
+
+    const previousWeekEndDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - currentDate.getDay() - 1
+    )
+
+    const weekBeforePreviousStartDate = new Date(
+      previousWeekStartDate.getFullYear(),
+      previousWeekStartDate.getMonth(),
+      previousWeekStartDate.getDate() - 7
+    )
+
+    const weekBeforePreviousEndDate = new Date(
+      previousWeekEndDate.getFullYear(),
+      previousWeekEndDate.getMonth(),
+      previousWeekEndDate.getDate() - 7
+    )
+
+    const thisWeekTasks = await Task.find({
+      createdAt: {
+        $gte: currentWeekStartDate,
+        $lte: currentWeekEndDate,
+      },
+    }).exec()
+
+    const previousWeekTasks = await Task.find({
+      createdAt: {
+        $gte: previousWeekStartDate,
+        $lte: previousWeekEndDate,
+      },
+    }).exec()
+
+    const weekBeforePreviousTasks = await Task.find({
+      createdAt: {
+        $gte: weekBeforePreviousStartDate,
+        $lte: weekBeforePreviousEndDate,
+      },
+    }).exec()
+
+    res.status(200).json({
+      message: "Tasks Fetched Successfully",
+      weekData: [
+        {
+          week: 1,
+          tasks: weekBeforePreviousTasks,
+        },
+        {
+          week: 2,
+          tasks: previousWeekTasks,
+        },
+        {
+          week: 3,
+          tasks: thisWeekTasks,
+        },
+      ],
+    })
   } catch (err) {
     console.log(err)
     res.status(500).json({ message: "Internal Server Error" })
