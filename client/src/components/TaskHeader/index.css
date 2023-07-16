@@ -33,9 +33,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  width: 70%;
+  width: 80%;
   max-width: 300px;
-  /* border-bottom: 1px solid rgba(0, 0, 0); */
 }
 
 .task-search-container > input {
@@ -115,7 +114,8 @@
 }
 
 .popup-overlay {
-  background-color: #00000050;
+  background-color: #00000040;
+  /* backdrop-filter: blur(5px); */
 }
 
 .create-task-popup-container {

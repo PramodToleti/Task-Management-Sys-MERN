@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 const User = require("../models/user")
+const authenticateToken = require("../middlewares/authentication")
 
 dotenv.config()
 
@@ -84,6 +85,17 @@ router.route("/login").post(async (req, res) => {
     } else {
       res.status(400).json({ message: "User Not Found" })
     }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ message: "Internal Server Error" })
+  }
+})
+
+//Get all Users
+router.route("/users").get(authenticateToken, async (req, res) => {
+  try {
+    const users = await User.find()
+    res.status(200).json(users)
   } catch (err) {
     console.log(err)
     res.status(500).json({ message: "Internal Server Error" })

@@ -1,131 +1,17 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { FiSearch, FiFilter, FiPlus } from "react-icons/fi"
 import Popup from "reactjs-popup"
 import { useForm } from "react-hook-form"
 import Cookies from "js-cookie"
-import { Oval } from "react-loader-spinner"
 import { toast } from "react-hot-toast"
 
 import "./index.css"
 
-const CreateTaskForm = (props) => {
-  const { register, handleSubmit, errors, reset, handleTaskData, loading } =
-    props
-  const [users, setUsers] = React.useState([])
-
-  const onSubmit = (data) => {
-    handleTaskData(data)
-    reset()
-  }
-
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Cookies.get("token")}`,
-      },
-    }
-
-    const getUsers = async () => {
-      const response = await fetch("http://localhost:5000/api/users", options)
-      const json = await response.json()
-      console.log(json)
-      if (response.ok) {
-        setUsers(json.data)
-      }
-    }
-
-    getUsers()
-  }, [])
-
-  return (
-    <div className="create-task-popup-container">
-      <h4>Create Task</h4>
-      <div className="create-task-form-container">
-        <form className="create-task-form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="create-task-form-input">
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Title"
-              {...register("title", { required: true })}
-              className="task-input-field"
-            />
-            {errors.title && (
-              <span className="task-error-msg">*Title is required</span>
-            )}
-          </div>
-          <div className="create-task-form-input">
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Description"
-              {...register("description", { required: true })}
-              className="task-input-field"
-              style={{ resize: "none", minHeight: "200px" }}
-            />
-            {errors.description && (
-              <span className="task-error-msg">*Description is required</span>
-            )}
-          </div>
-          <div className="create-task-form-input">
-            <label htmlFor="dueDate">Due Date</label>
-            <input
-              type="date"
-              id="dueDate"
-              name="dueDate"
-              {...register("dueDate", { required: true })}
-              className="task-input-field"
-            />
-            {errors.dueDate && (
-              <span className="task-error-msg">*Due Date is required</span>
-            )}
-          </div>
-          <div className="create-task-form-input">
-            <label htmlFor="assignedTo">Assign To</label>
-            <select
-              id="assignedTo"
-              name="assignedTo"
-              {...register("assignedTo", { required: true })}
-              className="task-input-field"
-            >
-              <option value="Me">Me</option>
-              <option value="User 1">User 1</option>
-              <option value="User 2">User 2</option>
-              <option value="User 3">User 3</option>
-            </select>
-            {errors.assignedTo && (
-              <span className="task-error-msg">*This field is required</span>
-            )}
-          </div>
-          <button type="submit" className="create-btn">
-            {loading ? (
-              <Oval
-                height={25}
-                width={25}
-                color="#ccc"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#fff"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-              />
-            ) : (
-              "Create"
-            )}
-          </button>
-        </form>
-      </div>
-    </div>
-  )
-}
+import TaskForm from "../TaskForm"
 
 const TaskHeader = (props) => {
-  const { handleSearchTitle, handleActiveFilters, activeFilters } = props
+  const { handleSearchTitle, handleActiveFilters, activeFilters, fetchTasks } =
+    props
   const {
     register,
     handleSubmit,
@@ -161,11 +47,11 @@ const TaskHeader = (props) => {
     )
     const json = await response.json()
     console.log(json)
-
     if (response.ok) {
       setLoading(false)
       toast.success("Task Created")
       popupRef.current.close()
+      fetchTasks.current()
     } else {
       setLoading(false)
       toast.error(json.message)
@@ -237,7 +123,7 @@ const TaskHeader = (props) => {
             </div>
           </Popup>
         </div>
-        {location !== "/assigned-to-me" && (
+        {location !== "/assigned-to-me" && location !== "/all-tasks" && (
           <div className="create-task-container">
             <Popup
               trigger={
@@ -249,7 +135,7 @@ const TaskHeader = (props) => {
               nested
               ref={popupRef}
             >
-              <CreateTaskForm
+              <TaskForm
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
