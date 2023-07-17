@@ -23,20 +23,19 @@ To start the frontend, follow these steps:
 3. Run `npm install` to install the dependencies.
 4. Start the project by running `npm run dev`.
 
-To start the backend, follow these steps:
-
-1. Clone the repository.
-2. Navigate to the `server` directory.
-3. Run `npm install` to install the dependencies.
-4. Start the backend server by running `npm run start`.
+The server is Deployed and it is live. You can send requests without setting uo the server
 
 ## Usage
 
-Once the installation steps are completed, you can access the task management system web application. Use the appropriate URL in your web browser to access the application. 👩‍💻
+The Task Management System is live and deployed to the web. You can access the application by clicking on the link below:
+
+[Task Management System](https://64b56f3d32002324ef0f142c--deluxe-salamander-bad23b.netlify.app/)
+
+The server is also deployed and accessible, so you can send requests without the need to set up the server locally. 👩‍💻
 
 ## Configuration
 
-To ensure successful database connection and authentication, make sure to set up the following environment variables in your `.env` file:
+If u want to test the application locally, to ensure successful database connection and authentication, make sure to set up the following environment variables in your `.env` file:
 
 - `MONGODB_URI`: The MongoDB database URI.
 - `JWT_SECRET`: The secret key used for JSON Web Token (JWT) authentication. 🔒
