@@ -34,7 +34,10 @@ const SignUp = () => {
       body: JSON.stringify(data),
     }
 
-    const response = await fetch("http://localhost:5000/api/signup", options)
+    const response = await fetch(
+      "https://tasks-server-backend.onrender.com/api/signup",
+      options
+    )
     if (response.ok) {
       setLoading(false)
       const json = await response.json()

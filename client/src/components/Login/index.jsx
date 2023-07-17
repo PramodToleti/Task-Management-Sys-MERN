@@ -34,7 +34,10 @@ const Login = () => {
       body: JSON.stringify(data),
     }
 
-    const response = await fetch("http://localhost:5000/api/login", options)
+    const response = await fetch(
+      "https://tasks-server-backend.onrender.com/api/login",
+      options
+    )
     if (response.ok) {
       setLoading(false)
       const json = await response.json()

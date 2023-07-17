@@ -94,12 +94,12 @@ const Navbar = () => {
                 <Link to="/" className={`link ${activeLink("/")}`}>
                   <li>My Tasks</li>
                 </Link>
-                <Link
+                {/* <Link
                   to="/all-tasks"
                   className={`link ${activeLink("/all-tasks")}`}
                 >
                   <li>All Tasks</li>
-                </Link>
+                </Link> */}
                 {isAdmin && (
                   <Link
                     to="/admin/dashboard"
@@ -142,12 +142,12 @@ const Navbar = () => {
             <Link to="/" className={`link ${activeLink("/")}`}>
               <li>My Tasks</li>
             </Link>
-            <Link
+            {/* <Link
               to="/all-tasks"
               className={`link ${activeLink("/all-tasks")}`}
             >
               <li>All Tasks</li>
-            </Link>
+            </Link> */}
             {isAdmin && (
               <Link
                 to="/admin/dashboard"

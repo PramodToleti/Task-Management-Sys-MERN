@@ -37,7 +37,10 @@ const TaskForm = (props) => {
     }
 
     const getUsers = async () => {
-      const response = await fetch("http://localhost:5000/api/users", options)
+      const response = await fetch(
+        "https://tasks-server-backend.onrender.com/api/users",
+        options
+      )
       const json = await response.json()
       if (response.ok) {
         setUsers(json)

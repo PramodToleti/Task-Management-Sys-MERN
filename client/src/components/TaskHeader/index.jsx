@@ -20,6 +20,9 @@ const TaskHeader = (props) => {
   } = useForm()
   const [loading, setLoading] = React.useState(false)
   const popupRef = React.useRef(null)
+  const [activeOption, setActiveOption] = React.useState("tasks")
+
+  const handleOption = props?.handleOption
 
   const location = window.location.pathname
 
@@ -42,7 +45,7 @@ const TaskHeader = (props) => {
     }
 
     const response = await fetch(
-      "http://localhost:5000/api/tasks/create",
+      "https://tasks-server-backend.onrender.com/api/tasks/create",
       options
     )
     const json = await response.json()
@@ -59,95 +62,127 @@ const TaskHeader = (props) => {
   }
 
   return (
-    <div className="task-container-header">
-      <div>
-        <div className="task-search-container">
-          <input
-            type="search"
-            placeholder="Title"
-            onChange={(e) => {
-              handleSearchTitle(e.target.value)
+    <div
+      className={
+        location === "/admin/dashboard"
+          ? "task-container-header"
+          : "task-container-header-normal"
+      }
+    >
+      {location === "/admin/dashboard" && (
+        <div className="task-analytics-container">
+          <h3
+            onClick={() => {
+              setActiveOption("tasks")
+              handleOption && handleOption("tasks")
             }}
-          />
-          <FiSearch className="header-icon" />
-        </div>
-        <div className="task-filter-container">
-          <Popup
-            trigger={
-              <button className="filter-btn">
-                <FiFilter className="header-icon" />
-              </button>
-            }
-            position="bottom center"
+            className={activeOption === "tasks" ? "active-option" : ""}
           >
-            <div className="filter-popup-container">
-              <h4>Status</h4>
-              <div className="filter-status-container">
-                <div className="filter-status">
-                  <input
-                    type="checkbox"
-                    id="pending"
-                    value="Pending"
-                    checked={activeFilters.includes("Pending")}
-                    onChange={(e) => {
-                      handleActiveFilters(e.target.value, e.target.checked)
-                    }}
-                  />
-                  <label htmlFor="pending">Pending</label>
-                </div>
-                <div className="filter-status">
-                  <input
-                    type="checkbox"
-                    id="inProgress"
-                    value="In Progress"
-                    checked={activeFilters.includes("In Progress")}
-                    onChange={(e) => {
-                      handleActiveFilters(e.target.value, e.target.checked)
-                    }}
-                  />
-                  <label htmlFor="inProgress">In Progress</label>
-                </div>
-                <div className="filter-status">
-                  <input
-                    type="checkbox"
-                    id="completed"
-                    value="Completed"
-                    checked={activeFilters.includes("Completed")}
-                    onChange={(e) => {
-                      handleActiveFilters(e.target.value, e.target.checked)
-                    }}
-                  />
-                  <label htmlFor="completed">Completed</label>
-                </div>
-              </div>
-            </div>
-          </Popup>
+            Tasks
+          </h3>
+          <h3
+            onClick={() => {
+              setActiveOption("analytics")
+              handleOption && handleOption("analytics")
+            }}
+            className={activeOption === "analytics" ? "active-option" : ""}
+          >
+            Analytics
+          </h3>
         </div>
-        {location !== "/assigned-to-me" && location !== "/all-tasks" && (
-          <div className="create-task-container">
+      )}
+      {activeOption === "tasks" && (
+        <div>
+          <div className="task-search-container">
+            <input
+              type="search"
+              placeholder="Title"
+              onChange={(e) => {
+                handleSearchTitle(e.target.value)
+              }}
+            />
+            <FiSearch className="header-icon" />
+          </div>
+          <div className="task-filter-container">
             <Popup
               trigger={
-                <button className="create-task-btn">
-                  <FiPlus className="header-icon" />
+                <button className="filter-btn">
+                  <FiFilter className="header-icon" />
                 </button>
               }
-              modal
-              nested
-              ref={popupRef}
+              position="bottom center"
             >
-              <TaskForm
-                register={register}
-                handleSubmit={handleSubmit}
-                errors={errors}
-                reset={reset}
-                handleTaskData={handleTaskData}
-                type="create"
-                loading={loading}
-              />
+              <div className="filter-popup-container">
+                <h4>Status</h4>
+                <div className="filter-status-container">
+                  <div className="filter-status">
+                    <input
+                      type="checkbox"
+                      id="pending"
+                      value="Pending"
+                      checked={activeFilters.includes("Pending")}
+                      onChange={(e) => {
+                        handleActiveFilters(e.target.value, e.target.checked)
+                      }}
+                    />
+                    <label htmlFor="pending">Pending</label>
+                  </div>
+                  <div className="filter-status">
+                    <input
+                      type="checkbox"
+                      id="inProgress"
+                      value="In Progress"
+                      checked={activeFilters.includes("In Progress")}
+                      onChange={(e) => {
+                        handleActiveFilters(e.target.value, e.target.checked)
+                      }}
+                    />
+                    <label htmlFor="inProgress">In Progress</label>
+                  </div>
+                  <div className="filter-status">
+                    <input
+                      type="checkbox"
+                      id="completed"
+                      value="Completed"
+                      checked={activeFilters.includes("Completed")}
+                      onChange={(e) => {
+                        handleActiveFilters(e.target.value, e.target.checked)
+                      }}
+                    />
+                    <label htmlFor="completed">Completed</label>
+                  </div>
+                </div>
+              </div>
             </Popup>
           </div>
-        )}
-      </div>
+          {location !== "/assigned-to-me" &&
+            location !== "/all-tasks" &&
+            location !== "/admin/dashboard" && (
+              <div className="create-task-container">
+                <Popup
+                  trigger={
+                    <button className="create-task-btn">
+                      <FiPlus className="header-icon" />
+                    </button>
+                  }
+                  modal
+                  nested
+                  ref={popupRef}
+                >
+                  <TaskForm
+                    register={register}
+                    handleSubmit={handleSubmit}
+                    errors={errors}
+                    reset={reset}
+                    handleTaskData={handleTaskData}
+                    type="create"
+                    loading={loading}
+                  />
+                </Popup>
+              </div>
+            )}
+        </div>
+      )}
     </div>
   )
 }

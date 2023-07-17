@@ -20,7 +20,7 @@ const BarChart = ({ weekData }) => {
 
     // Define the dimensions and margins for the graph
     const width = 300
-    const height = 300
+    const height = 280
     const margin = { top: 20, right: 20, bottom: 30, left: 50 }
     const graphWidth = width - margin.left - margin.right
     const graphHeight = height - margin.top - margin.bottom
@@ -54,8 +54,8 @@ const BarChart = ({ weekData }) => {
       .domain([0, d3.max(weekData, (d) => d.count)])
       .range([graphHeight, 0])
 
-    // Create the x and y axes
-    const xAxis = d3.axisBottom(xScale)
+    const xAxisLabels = ["2 Weeks Ago", "Previous Week", "Current Week"]
+    const xAxis = d3.axisBottom(xScale).tickFormat((d, i) => xAxisLabels[i])
     const yAxis = d3.axisLeft(yScale).ticks(5)
 
     // Append the axes to the graph
@@ -78,7 +78,7 @@ const BarChart = ({ weekData }) => {
       .attr("y", (d) => yScale(d.count))
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => graphHeight - yScale(d.count))
-      .attr("fill", "steelblue")
+      .attr("fill", "#af7efd")
   }, [data])
 
   return (

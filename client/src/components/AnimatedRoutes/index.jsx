@@ -17,7 +17,7 @@ const AnimatedRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/" element={<Home />} />
-      <Route path="/all-tasks" element={<AllTasks />} />
+      {/* <Route path="/all-tasks" element={<AllTasks />} /> */}
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/assigned-to-me" element={<AssignedToMe />} />
       <Route path="/events" element={<Events />} />

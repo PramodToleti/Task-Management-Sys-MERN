@@ -47,7 +47,7 @@ const AllTasks = () => {
   React.useEffect(() => {
     setLoading(true)
     fetchTasks.current = async () => {
-      const api = `http://localhost:5000/api/tasks/all`
+      const api = `https://tasks-server-backend.onrender.com/api/tasks/all`
       const response = await fetch(api, {
         method: "GET",
         headers: {
@@ -78,7 +78,7 @@ const AllTasks = () => {
     }
 
     const response = await fetch(
-      `http://localhost:5000/api/tasks/update/${data.id}`,
+      `https://tasks-server-backend.onrender.com/api/tasks/update/${data.id}`,
       options
     )
     const json = await response.json()
@@ -113,7 +113,7 @@ const AllTasks = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/tasks/delete/${task._id}`,
+        `https://tasks-server-backend.onrender.com/api/tasks/delete/${task._id}`,
         options
       )
 

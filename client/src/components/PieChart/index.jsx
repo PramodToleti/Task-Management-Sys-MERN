@@ -69,7 +69,7 @@ const PieChart = ({ tasks }) => {
   return (
     <div className="pie-chart-container">
       <div ref={chartRef} className="pie-chart"></div>
-      <h3>No.of Tasks: {tasks.length}</h3>
+      <h3>Total no.of Tasks: {tasks.length}</h3>
     </div>
   )
 }

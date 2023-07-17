@@ -46,7 +46,7 @@ const Home = () => {
     }
 
     const response = await fetch(
-      `http://localhost:5000/api/tasks/update/${data.id}`,
+      `https://tasks-server-backend.onrender.com/api/tasks/update/${data.id}`,
       options
     )
     const json = await response.json()
@@ -94,7 +94,7 @@ const Home = () => {
     }
 
     const response = await fetch(
-      `http://localhost:5000/api/tasks/delete/${task._id}`,
+      `https://tasks-server-backend.onrender.com/api/tasks/delete/${task._id}`,
       options
     )
     const json = await response.json()
@@ -152,7 +152,7 @@ const Home = () => {
   React.useEffect(() => {
     setLoading(true)
     fetchTasks.current = async () => {
-      const api = `http://localhost:5000/api/tasks/get/${userDetails.id}`
+      const api = `https://tasks-server-backend.onrender.com/api/tasks/get/${userDetails.id}`
       const response = await fetch(api, {
         method: "GET",
         headers: {

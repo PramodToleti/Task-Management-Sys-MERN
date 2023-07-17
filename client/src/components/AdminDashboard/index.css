@@ -1,20 +1,16 @@
-.dashboard-container {
-  height: 90vh;
-  padding: 25px;
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  padding: 20px;
+  height: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 @media screen and (min-width: 768px) {
-  .dashboard-container {
-    height: 100vh;
+  .analytics-container {
     display: flex;
+    align-items: center;
   }
-}
-
-.dashboard-container::-webkit-scrollbar {
-  width: 0px !important;
-}
-
-.dashboard-content {
-  overflow-y: auto;
 }
