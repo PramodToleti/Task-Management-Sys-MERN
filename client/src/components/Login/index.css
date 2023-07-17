@@ -204,3 +204,12 @@
   cursor: pointer;
   text-decoration: none;
 }
+
+.eye-icon {
+  position: absolute;
+  top: 20%;
+  right: 5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+}

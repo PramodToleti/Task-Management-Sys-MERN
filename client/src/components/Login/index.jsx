@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form"
 import Cookies from "js-cookie"
 import { Oval } from "react-loader-spinner"
 import { toast } from "react-hot-toast"
+import { RiEyeOffFill } from "react-icons/ri"
+import { RiEyeFill } from "react-icons/ri"
 
 import "./index.css"
 
@@ -17,6 +19,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
+  const [showPassword, setShowPassword] = React.useState(false)
 
   const token = Cookies.get("token")
 
@@ -88,14 +91,33 @@ const Login = () => {
             {errors.email && <p className="error">*Email is required</p>}
           </div>
           <div className="input-container">
-            <input
-              type="password"
-              name="password"
-              {...register("password", { required: true, minLength: 5 })}
-            />
+            {!showPassword ? (
+              <input
+                type="password"
+                name="password"
+                {...register("password", { required: true, minLength: 5 })}
+              />
+            ) : (
+              <input
+                type="text"
+                name="password"
+                {...register("password", { required: true, minLength: 5 })}
+              />
+            )}
             <label htmlFor="input" className="label">
               Password
             </label>
+            {!showPassword ? (
+              <RiEyeOffFill
+                onClick={() => setShowPassword(!showPassword)}
+                className="eye-icon"
+              />
+            ) : (
+              <RiEyeFill
+                onClick={() => setShowPassword(!showPassword)}
+                className="eye-icon"
+              />
+            )}
             <div className="underline"></div>
             {errors.password && (
               <p className="error">*Password must be atleast 5 characters</p>
