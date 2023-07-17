@@ -61,12 +61,6 @@
   max-width: 350px;
 }
 
-@media screen and (max-width: 767px) {
-  .task-container-header > div {
-    justify-content: space-between;
-  }
-}
-
 .task-search-container {
   border-radius: 5px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -137,6 +131,9 @@
   flex-direction: column;
   gap: 18px;
   font-size: 15px;
+  width: 100%;
+  padding-left: 10px;
+  margin-bottom: 5px;
 }
 
 .filter-status-container > div {

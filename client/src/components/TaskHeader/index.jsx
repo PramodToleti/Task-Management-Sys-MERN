@@ -152,6 +152,33 @@ const TaskHeader = (props) => {
                     <label htmlFor="completed">Completed</label>
                   </div>
                 </div>
+                <h4>Date</h4>
+                <div className="filter-status-container">
+                  <div className="filter-status">
+                    <input
+                      type="checkbox"
+                      id="today"
+                      value="Today"
+                      checked={activeFilters.includes("Today")}
+                      onChange={(e) => {
+                        handleActiveFilters(e.target.value, e.target.checked)
+                      }}
+                    />
+                    <label htmlFor="pending">Today</label>
+                  </div>
+                  <div className="filter-status">
+                    <input
+                      type="checkbox"
+                      id="yesterday"
+                      value="Yesterday"
+                      checked={activeFilters.includes("Yesterday")}
+                      onChange={(e) => {
+                        handleActiveFilters(e.target.value, e.target.checked)
+                      }}
+                    />
+                    <label htmlFor="inProgress">Yesterday</label>
+                  </div>
+                </div>
               </div>
             </Popup>
           </div>
