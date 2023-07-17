@@ -18,7 +18,7 @@
   background-color: rgb(255, 255, 255);
   position: relative;
   height: 100%;
-  max-height: 100vh;
+  max-height: 90vh;
 }
 
 @media screen and (min-width: 768px) {
@@ -141,6 +141,17 @@
     max-width: 320px;
     margin-right: 20px;
   }
+}
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.task-card div > p {
+  margin-top: 20px;
+  word-break: break-all;
 }
 
 .task-card-header {

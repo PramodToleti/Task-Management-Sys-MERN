@@ -210,94 +210,98 @@ const Home = () => {
             ) : (
               filteredTasks.map((task, i) => (
                 <div className="task-card" key={task._id}>
-                  <div className="task-card-header">
-                    <div className="title-container">
-                      <h2>{task.title}</h2>
-                      <div
-                        className={`task-status ${statusColor(task.status)}`}
-                      >
-                        {task.status}
+                  <div>
+                    <div className="task-card-header">
+                      <div className="title-container">
+                        <h2>{task.title}</h2>
+                        <div
+                          className={`task-status ${statusColor(task.status)}`}
+                        >
+                          {task.status}
+                        </div>
                       </div>
-                    </div>
-                    <div className="edit-container">
-                      <CgOptions
-                        className="edit-icon"
-                        onClick={() => {
-                          toggleEdit(!edit)
-                          setActiveEdit(i)
-                        }}
-                      />
+                      <div className="edit-container">
+                        <CgOptions
+                          className="edit-icon"
+                          onClick={() => {
+                            toggleEdit(!edit)
+                            setActiveEdit(i)
+                          }}
+                        />
 
-                      <div
-                        className={`edit-popup-container ${
-                          edit && activeEdit === i ? "display-edit" : ""
-                        }`}
-                        ref={editRef}
-                      >
-                        <Popup
-                          modal
-                          trigger={
-                            <button type="button" className="edit-popup-btn">
-                              Edit
-                            </button>
-                          }
-                          ref={updateRef}
+                        <div
+                          className={`edit-popup-container ${
+                            edit && activeEdit === i ? "display-edit" : ""
+                          }`}
+                          ref={editRef}
                         >
-                          <TaskForm
-                            handleTaskData={handleTaskData}
-                            loading={btnLoad}
-                            type="edit"
-                            task={task}
-                          />
-                        </Popup>
-                        <Popup
-                          modal
-                          trigger={
-                            <button type="button" className="edit-popup-btn">
-                              Delete
-                            </button>
-                          }
-                        >
-                          <div className="delete-popup-container">
-                            <h3>Are you sure you want to delete this task?</h3>
-                            <div className="delete-popup-btn-container">
-                              <button
-                                type="button"
-                                className="delete-popup-btn"
-                                onClick={() => deleteTask(task)}
-                              >
-                                {btnLoad ? (
-                                  <Oval
-                                    height={15}
-                                    width={15}
-                                    color="#000"
-                                    wrapperStyle={{}}
-                                    wrapperClass=""
-                                    visible={true}
-                                    ariaLabel="oval-loading"
-                                    secondaryColor="#fff"
-                                    strokeWidth={2}
-                                    strokeWidthSecondary={2}
-                                  />
-                                ) : (
-                                  "Yes"
-                                )}
+                          <Popup
+                            modal
+                            trigger={
+                              <button type="button" className="edit-popup-btn">
+                                Edit
                               </button>
-                              <button
-                                type="button"
-                                className="delete-popup-btn"
-                                onClick={() => updateRef.current.close()}
-                              >
-                                No
+                            }
+                            ref={updateRef}
+                          >
+                            <TaskForm
+                              handleTaskData={handleTaskData}
+                              loading={btnLoad}
+                              type="edit"
+                              task={task}
+                            />
+                          </Popup>
+                          <Popup
+                            modal
+                            trigger={
+                              <button type="button" className="edit-popup-btn">
+                                Delete
                               </button>
+                            }
+                            ref={updateRef}
+                          >
+                            <div className="delete-popup-container">
+                              <h3>
+                                Are you sure you want to delete this task?
+                              </h3>
+                              <div className="delete-popup-btn-container">
+                                <button
+                                  type="button"
+                                  className="delete-popup-btn"
+                                  onClick={() => deleteTask(task)}
+                                >
+                                  {btnLoad ? (
+                                    <Oval
+                                      height={15}
+                                      width={15}
+                                      color="#000"
+                                      wrapperStyle={{}}
+                                      wrapperClass=""
+                                      visible={true}
+                                      ariaLabel="oval-loading"
+                                      secondaryColor="#fff"
+                                      strokeWidth={2}
+                                      strokeWidthSecondary={2}
+                                    />
+                                  ) : (
+                                    "Yes"
+                                  )}
+                                </button>
+                                <button
+                                  type="button"
+                                  className="delete-popup-btn"
+                                  onClick={() => updateRef.current.close()}
+                                >
+                                  No
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                        </Popup>
+                          </Popup>
+                        </div>
                       </div>
                     </div>
+                    <p>{task.description}</p>
                   </div>
-
-                  <p>{task.description}</p>
 
                   <div className="task-card-footer">
                     <p>

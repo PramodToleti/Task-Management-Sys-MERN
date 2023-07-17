@@ -95,6 +95,32 @@ const AssignedToMe = () => {
     }
   }
 
+  //Delete task
+  const deleteTask = async (task) => {
+    setBtnLoad(true)
+    const options = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await fetch(
+      `http://localhost:5000/api/tasks/delete/${task._id}`,
+      options
+    )
+    const json = await response.json()
+    if (response.ok) {
+      toast.success("Task Deleted")
+      fetchTasks.current()
+      setBtnLoad(false)
+    } else {
+      toast.error(json.message)
+      setBtnLoad(false)
+    }
+  }
+
   //Filter tasks
   const filteredTasks = tasks.filter((task) => {
     if (activeTitle === "" && activeFilters.length === 0) {
@@ -225,6 +251,7 @@ const AssignedToMe = () => {
                               Delete
                             </button>
                           }
+                          ref={updateRef}
                         >
                           <div className="delete-popup-container">
                             <h3>Are you sure you want to delete this task?</h3>
