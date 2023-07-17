@@ -23,13 +23,13 @@ To start the frontend, follow these steps:
 3. Run `npm install` to install the dependencies.
 4. Start the project by running `npm run dev`.
 
-The server is Deployed and it is live. You can send requests without setting uo the server
+The server is Deployed and it is live. You can send requests without setting up the server
 
 ## Usage
 
 The Task Management System is live and deployed to the web. You can access the application by clicking on the link below:
 
-[Task Management System](https://64b56f3d32002324ef0f142c--deluxe-salamander-bad23b.netlify.app/)
+Live link: [Task Management System](https://64b56f3d32002324ef0f142c--deluxe-salamander-bad23b.netlify.app/) 🔗
 
 The server is also deployed and accessible, so you can send requests without the need to set up the server locally. 👩‍💻
 
@@ -42,13 +42,13 @@ If u want to test the application locally, to ensure successful database connect
 
 ## Contributing
 
-We welcome contributions from the community to enhance the functionality of the project. To contribute, please follow these steps:
+We welcome contributions from the community to enhance the functionality of the project 😀. To contribute, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
 3. Make the necessary changes in your branch.
 4. Commit and push your changes.
-5. Open a pull request with a detailed description of the changes.
+5. Open a pull request with a detailed description of the changes. 
 
 Please ensure your code adheres to the project's coding standards and includes appropriate documentation. 🙌
 
