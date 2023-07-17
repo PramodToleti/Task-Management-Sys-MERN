@@ -131,7 +131,26 @@ const AssignedToMe = () => {
     ) {
       return task
     } else if (activeTitle === "" && activeFilters.length > 0) {
-      return activeFilters.includes(task.status)
+      if (activeFilters.includes("Today")) {
+        const today = new Date()
+        const dueDate = new Date(task.createdAt)
+        return (
+          dueDate.getDate() === today.getDate() &&
+          dueDate.getMonth() === today.getMonth() &&
+          dueDate.getFullYear() === today.getFullYear()
+        )
+      } else if (activeFilters.includes("Yesterday")) {
+        const yesterday = new Date()
+        yesterday.setDate(yesterday.getDate() - 1)
+        const dueDate = new Date(task.dueDate)
+        return (
+          dueDate.getDate() === yesterday.getDate() &&
+          dueDate.getMonth() === yesterday.getMonth() &&
+          dueDate.getFullYear() === yesterday.getFullYear()
+        )
+      } else {
+        return activeFilters.includes(task.status)
+      }
     } else if (
       task.title.toLowerCase().includes(activeTitle.toLowerCase()) &&
       activeFilters.length > 0
