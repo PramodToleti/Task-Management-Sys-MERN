@@ -24,6 +24,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = React.useState(false)
   const [btnLoad, setBtnLoad] = React.useState(false)
   const fetchTasks = React.useRef(null)
+  const fetchWeekData = React.useRef(null)
   const editRef = React.useRef(null)
   const updateRef = React.useRef(null)
   const token = Cookies.get("token")
@@ -35,8 +36,9 @@ const AdminDashboard = () => {
   }
 
   //close edit when clicked outside
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
+      console.log(editRef.current)
       if (editRef.current && editRef.current !== event.target) {
         toggleEdit(false)
       }
@@ -47,10 +49,10 @@ const AdminDashboard = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [])
+  }, [editRef])
 
   //fetch aLL user's tasks
-  React.useEffect(() => {
+  useEffect(() => {
     setLoading(true)
     fetchTasks.current = async () => {
       const api = `https://tasks-server-backend.onrender.com/api/tasks/all`
@@ -74,7 +76,7 @@ const AdminDashboard = () => {
   //fetch weekly tasks data
   useEffect(() => {
     setLoading(true)
-    fetchTasks.current = async () => {
+    fetchWeekData.current = async () => {
       const api = `https://tasks-server-backend.onrender.com/api/tasks/weekly`
       const response = await fetch(api, {
         method: "GET",
@@ -86,7 +88,7 @@ const AdminDashboard = () => {
       const data = await response.json()
       setWeekData(data.weekData)
     }
-    fetchTasks.current()
+    fetchWeekData.current()
   }, [])
 
   //Update task
@@ -111,6 +113,7 @@ const AdminDashboard = () => {
       toast.success("Task Updated")
       updateRef.current.close()
       fetchTasks.current()
+      fetchWeekData.current()
     } else {
       setBtnLoad(false)
       toast.error(json.message)
