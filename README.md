@@ -29,7 +29,7 @@ The server is Deployed and it is live. You can send requests without setting up 
 
 The Task Management System is live and deployed to the web. You can access the application by clicking on the link below:
 
-Live link: [Task Management System](https://64b56f3d32002324ef0f142c--deluxe-salamander-bad23b.netlify.app/) 🔗
+Website link: [Task Management System](https://task-management-sys.onrender.com/) 🔗
 
 The server is also deployed and accessible, so you can send requests without the need to set up the server locally. 👩‍💻
 
